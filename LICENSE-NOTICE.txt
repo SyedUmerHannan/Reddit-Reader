@@ -1,0 +1,1 @@
+Reddit Reader is an independent implementation. It uses a similar high-level pattern to public archive viewers but does not copy source files from them. If you later copy or adapt code from another repository, first verify that repository's license and preserve all required notices and obligations. Public archive coverage is incomplete; use responsibly.
