@@ -449,3 +449,35 @@ describe('export helpers', () => {
     assert.equal(csvEscape('say "hi"'), '"say ""hi"""');
   });
 });
+
+describe('normalizeUsername path strictness', () => {
+  it('accepts profile URL with known tab suffix', () => {
+    assert.equal(
+      normalizeUsername('https://www.reddit.com/user/example_user/submitted/'),
+      'example_user'
+    );
+  });
+  it('rejects profile URL with extra unrelated path segment', () => {
+    assert.throws(
+      () => normalizeUsername('https://reddit.com/user/example/evil/'),
+      /Only Reddit profile URLs/
+    );
+  });
+  it('rejects username with embedded dot in profile path', () => {
+    assert.throws(
+      () => normalizeUsername('https://reddit.com/user/example.evil/'),
+      /Only Reddit profile URLs/
+    );
+  });
+});
+
+describe('guardCsvFormula whitespace', () => {
+  it('guards formula chars after leading whitespace', () => {
+    assert.equal(guardCsvFormula(' =1+1'), "' =1+1");
+    assert.equal(guardCsvFormula('\t=cmd'), "'\t=cmd");
+    assert.equal(guardCsvFormula('\r\n@sum'), "'\r\n@sum");
+  });
+  it('does not alter ordinary leading spaces', () => {
+    assert.equal(guardCsvFormula(' hello'), ' hello');
+  });
+});

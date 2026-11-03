@@ -79,10 +79,13 @@ Reddit-Reader/
 - Archive content is never inserted via `innerHTML` / `outerHTML` / `insertAdjacentHTML`.
 - Usernames are validated before API use.
 - Only HTTPS links to an explicit Reddit host allowlist become clickable.
-- CSV cells that start with `=`, `+`, `-`, or `@` are prefixed so spreadsheets do not treat them as formulas.
+- CSV cells that start with `=`, `+`, `-`, or `@` (including after leading whitespace/tabs) are prefixed so spreadsheets do not treat them as formulas.
 - Errors are shown without stack traces; diagnostics go to the console.
 
 ## Limitations
+
+- Profile URL input only accepts `/user/NAME` or `/u/NAME` (optional known profile tabs). Extra path segments are rejected rather than silently truncated.
+
 
 - Arctic Shift has no guaranteed uptime; CORS and rate limits are provider-side.
 - Browser `fetch` does not set a custom User-Agent (the live API probe from this environment used one when required).

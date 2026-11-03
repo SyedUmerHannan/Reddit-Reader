@@ -60,7 +60,11 @@ function normalizeUsername(raw) {
     ) {
       throw new Error('Only Reddit profile URLs are accepted (reddit.com/user/… or /u/…).');
     }
-    const pathMatch = url.pathname.match(/^\/(user|u)\/([A-Za-z0-9_-]{1,20})\/?/i);
+    // Require /user/NAME or /u/NAME with optional trailing slash or known profile tabs only.
+    // Do not silently truncate /user/example/evil into "example".
+    const pathMatch = url.pathname.match(
+      /^\/(user|u)\/([A-Za-z0-9_-]{1,20})(?:\/?(?:(?:submitted|comments|about|saved|upvoted|downvoted|gilded|hidden|overview)\/?)?)?$/i
+    );
     if (!pathMatch) {
       throw new Error('Only Reddit profile URLs are accepted (reddit.com/user/… or /u/…).');
     }
@@ -373,7 +377,9 @@ function sanitizeFilenamePart(user) {
 function guardCsvFormula(value) {
   if (value === '' || value == null) return '';
   const s = String(value);
-  if (/^[=+\-@]/.test(s)) return "'" + s;
+  // Guard formula markers even when preceded by whitespace, tabs, CR, or BOM.
+  // Spreadsheets may still treat leading whitespace + formula chars as formulas.
+  if (/^[\s\uFEFF\u200B\u0000-\u001F]*[=+\-@]/.test(s)) return "'" + s;
   return s;
 }
 

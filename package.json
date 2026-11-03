@@ -5,7 +5,7 @@
   "description": "Static browser explorer for publicly archived Reddit posts and comments",
   "type": "module",
   "scripts": {
-    "test": "node --test tests/core.test.js"
+    "test": "node --test tests/*.test.js"
   },
   "engines": {
     "node": ">=18"
