@@ -1,0 +1,14 @@
+{
+  "name": "reddit-reader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static browser explorer for publicly archived Reddit posts and comments",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/core.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}
